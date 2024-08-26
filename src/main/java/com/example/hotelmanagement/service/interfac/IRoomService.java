@@ -5,7 +5,6 @@ import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
-
 import com.example.hotelmanagement.dto.Response;
 
 public interface IRoomService {

@@ -8,6 +8,9 @@ import com.example.hotelmanagement.repo.BookingRepository;
 import com.example.hotelmanagement.repo.RoomRepository;
 import com.example.hotelmanagement.service.interfac.IRoomService;
 import com.example.hotelmanagement.utils.Utils;
+
+import jakarta.annotation.PostConstruct;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Sort;
@@ -27,8 +30,8 @@ public class RoomService implements IRoomService {
 
 	@Autowired
 	private RoomRepository roomRepository;
-	@Autowired
-	private BookingRepository bookingRepository;
+//	@Autowired
+//	private BookingRepository bookingRepository;
 
 //    @Override
 //    public Response addNewRoom(MultipartFile photo, String roomType, BigDecimal roomPrice, String description) {
@@ -110,15 +113,15 @@ public class RoomService implements IRoomService {
 	}
 
 	@Value("${image.storage.path}")
-	private static String IMAGE_DIRECTORY;
+	private String IMAGE_DIRECTORY;
 
-	// Ensure the image directory exists
-	static {
-		try {
-			Files.createDirectories(Paths.get(IMAGE_DIRECTORY));
-		} catch (Exception e) {
-			throw new RuntimeException("Could not create image directory", e);
-		}
+	@PostConstruct
+	public void init() {
+	    try {
+	        Files.createDirectories(Paths.get(IMAGE_DIRECTORY));
+	    } catch (Exception e) {
+	        throw new RuntimeException("Could not create image directory", e);
+	    }
 	}
 
 	public Response addNewRoom(MultipartFile photo, String roomType, BigDecimal roomPrice, String description) {

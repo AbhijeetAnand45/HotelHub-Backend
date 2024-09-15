@@ -20,6 +20,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import com.example.hotelmanagement.service.CustomUserDetailsService;
+import com.example.hotelmanagement.security.JWTAuthFilter;
 
 
 @Configuration
@@ -28,7 +29,7 @@ import com.example.hotelmanagement.service.CustomUserDetailsService;
 public class SecurityConfig {
 
 
-    @Autowired
+	@Autowired
     private CustomUserDetailsService customUserDetailsService;
     @Autowired
     private JWTAuthFilter jwtAuthFilter;
@@ -38,7 +39,7 @@ public class SecurityConfig {
         httpSecurity.csrf(AbstractHttpConfigurer::disable)
                 .cors(Customizer.withDefaults())
                 .authorizeHttpRequests(request -> request
-                        .requestMatchers("/auth/**", "/rooms/**", "/bookings/**", "/users/**").permitAll()
+                        .requestMatchers("/auth/**", "/rooms/**", "/bookings/**").permitAll()
                         .anyRequest().authenticated())
                 .sessionManagement(manager -> manager.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider())

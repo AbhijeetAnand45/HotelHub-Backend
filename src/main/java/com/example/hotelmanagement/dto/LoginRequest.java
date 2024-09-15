@@ -15,12 +15,14 @@ public class LoginRequest {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+	
+	@NotBlank(message = "password is required")
+	private String password;
 	public String getPassword() {
 		return password;
 	}
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	@NotBlank(message = "password is required")
-	private String password;
+	
 }

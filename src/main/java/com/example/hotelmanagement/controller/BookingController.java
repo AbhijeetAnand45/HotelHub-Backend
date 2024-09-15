@@ -17,19 +17,19 @@ public class BookingController {
     private IBookingService bookingService;
 
     @PostMapping("/book-room/{roomId}/{userId}")
-    @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
+    @PreAuthorize("hasAuthority('ADMIN') or hasAuthority('USER')")
     public ResponseEntity<Response> saveBookings(@PathVariable Long roomId,
                                                  @PathVariable Long userId,
                                                  @RequestBody Booking bookingRequest) {
-
-
+    	
         Response response = bookingService.saveBooking(roomId, userId, bookingRequest);
+        System.out.println("Response is " + response);
         return ResponseEntity.status(response.getStatusCode()).body(response);
 
     }
 
     @GetMapping("/all")
-    @PreAuthorize("hasRole('ADMIN')")
+//    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<Response> getAllBookings() {
         Response response = bookingService.getAllBookings();
         return ResponseEntity.status(response.getStatusCode()).body(response);
@@ -42,7 +42,7 @@ public class BookingController {
     }
 
     @DeleteMapping("/cancel/{bookingId}")
-    @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
+    @PreAuthorize("hasAuthority('ADMIN') or hasAuthority('USER')")
     public ResponseEntity<Response> cancelBooking(@PathVariable Long bookingId) {
         Response response = bookingService.cancelBooking(bookingId);
         return ResponseEntity.status(response.getStatusCode()).body(response);
